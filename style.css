@@ -1,0 +1,311 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  /* Start Landing Page */
+.landing-page {
+  background-image: url('images/bg1.jpg');
+  background-size: cover;  
+  background-position: center; 
+  background-repeat: no-repeat; 
+  
+  height: 100vh; 
+  position: relative;
+}
+
+  .landing-page .overlay {
+    background-color: rgba(0, 0, 0, 0.452);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .landing-page nav {
+  position: relative;
+  z-index: 2;
+}
+ .introduction-text{
+  position: relative;
+  z-index: 2;  
+  color: white;
+  text-align: center;
+  margin-top: 140px;
+}
+.introduction-text h1{
+  font-size: 50px;
+    text-transform: uppercase;
+}
+ .introduction-text h1 span{
+    color: goldenrod;
+ }
+  .introduction-text .btn{
+    color: #000 !important;
+    transition: ease-in 0.5s;
+  }
+
+ .introduction-text .btn:hover{
+    background-color: rgb(206, 110, 42);
+    /* color: white !important; */
+    transform: scale(1.1);
+
+ }
+
+  .landing-page nav .nav-link {
+     transition: 0.3s;
+  }
+.landing-page nav .nav-link:hover {    
+color: goldenrod!important;
+  text-decoration: underline;
+    }
+
+
+/* ======.................. About Section Styles............ ====== */
+.container2 h2 span{
+  color: gold;
+}
+
+#imgAbout {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.4s ease-in, box-shadow 0.4s ease-in;
+}
+
+#imgAbout:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px rgba(2,2,2,0.53);
+  cursor: pointer;
+}
+
+.img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.textsec2 {
+  margin: -20px 0 0 40px; /* مسافة من اليسار */
+}
+
+
+/* Dots */
+.AboutDots {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active, .dot:hover {
+  background-color: rgb(224, 179, 31);
+}
+
+.btnsec2{
+  transition:ease-in 0.5s;
+}
+.btnsec2:hover{
+    background-color: rgb(206, 110, 42);
+    /* color: white !important; */
+    transform: scale(1.1);
+
+ }
+
+/* Text */
+.textsec2 p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 992px){
+  .textsec2 {
+    margin: 0;
+    text-align: center;
+  }
+  #imgAbout{
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 576px){
+  #imgAbout{
+    max-width: 250px;
+  }
+  .container2 h2{
+    font-size: 28px;
+  }
+  .textsec2 p{
+    font-size: 16px;
+  }
+}
+
+
+/* ---------------------------start section 3----------------------------------- */
+
+.destinations h2 {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.destinations h2 span {
+  color: gold;
+}
+
+.destination-card {
+  background: #fcfae3;
+  border-radius: 12px;
+  
+  padding: 15px;
+  box-shadow: 5px 0 14px rgba(0, 0, 0, 0.527);
+  transition: .3s;
+}
+
+.destination-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.destination-card h4 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+/* ................................section4...................................... */
+.bgframe{
+  width: 100%;
+  height: auto;
+  background-image:url("images/bgsec4.png");
+   /* background-size: cover; */
+    background-attachment:fixed;
+    background-position: bottom ;
+  padding-top: 100px;
+  padding: 100px 80px 0px 80px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+.bgframe .text{
+  font-size: 58px;
+  font-weight: 700;
+  margin-top: 50px;
+  color: white;
+}
+
+
+/* -----------------------------------section5------------------------- */
+.vr-container {
+  width: 50%;
+  height: 450px; 
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+a-scene {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* -----------------------------------Footer Section------------------------- */
+.footer-section {
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 60px 0 20px;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.footer-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.footer-heading span {
+  color: goldenrod;
+}
+
+.footer-text {
+  color: #bbb;
+  line-height: 1.6;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #bbb;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: goldenrod;
+  padding-left: 5px;
+}
+
+.footer-contact li {
+  color: #bbb;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-contact i {
+  color: goldenrod;
+  margin-right: 10px;
+  width: 20px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #333;
+  color: #fff;
+  border-radius: 50%;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  background: goldenrod;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.footer-divider {
+  border-color: #444;
+  margin: 30px 0;
+}
+
+.copyright-text {
+  color: #777;
+  font-size: 14px;
+}
