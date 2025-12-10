@@ -1,25 +1,34 @@
 <?php
 $conn = mysqli_connect("localhost:3307", "root", "", "tourism", 3307);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql_destination = "SELECT id, name FROM destination";
-$result_destination = $conn->query($sql_destination);
+// إضافة وجهة جديدة
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_destination'])) {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $client_name = $_POST['client_name'];
-    $destination_id = $_POST['destination_id'];
-    $trip_date = $_POST['trip_date'];
+    $name = $_POST['name'];
+    $description = $_POST['description'];
 
-    $sql = "INSERT INTO trips (client_name, destination_id, trip_date) 
-            VALUES ('$client_name', '$destination_id', '$trip_date')";
+    // رفع الصورة
+    $image = $_FILES['image']['name'];
+    $target_dir = "images/";
+    $target_file = $target_dir . basename($image);
 
-    if ($conn->query($sql) === TRUE) {
-        $message = "✅ Trip added successfully!";
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+
+        $sql = "INSERT INTO destination (name, description, image)
+                VALUES ('$name', '$description', '$image')";
+
+        if ($conn->query($sql) === TRUE) {
+            $message = "✅ Destination added successfully!";
+        } else {
+            $message = "❌ Database Error: " . $conn->error;
+        }
+
     } else {
-        $message = "❌ Error: " . $conn->error;
+        $message = "❌ Image upload failed!";
     }
 }
 ?>
@@ -28,126 +37,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add New Trip</title>
+    <title>Add Destination</title>
 
     <style>
-       body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #d4af37, #f5e6a8, #c9a227);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #b19128ff, #d8c98eff, #c9a227);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.trip-container {
-    background: rgba(255, 255, 255, 0.95);
-    width: 420px;
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    border: 2px solid #d4af37;
-}
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0,0,0,.1);
+        }
 
-.trip-container h2 {
-    text-align: center;
-    color: #b8860b;
-    margin-bottom: 25px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-label {
-    font-weight: 600;
-    margin-top: 12px;
-    display: block;
-    color: #8b7500;
-}
+        label {
+            display: block;
+            margin-top: 10px;
+        }
 
-input, select {
-    width: 100%;
-    padding: 11px;
-    margin-top: 6px;
-    border-radius: 10px;
-    border: 1px solid #d4af37;
-    background-color: #fffdf3;
-    outline: none;
-    font-size: 14px;
-}
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
 
-input:focus, select:focus {
-    border-color: #b8860b;
-    box-shadow: 0 0 6px rgba(184,134,11,0.6);
-}
+        button {
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-button {
-    margin-top: 22px;
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(to right, #d4af37, #c9a227, #b8860b);
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
+        button:hover {
+            background-color: #ff4500;
+        }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
-}
+        .message {
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
 
-.message {
-    text-align: center;
-    margin-bottom: 18px;
-    font-weight: bold;
-}
-
-.success {
-    color: #9c7c00;
-}
-
-.error {
-    color: #b22222;
-}
-
-        
+        .success { color: green; }
+        .error { color: red; }
     </style>
 </head>
+
 <body>
 
-<div class="trip-container">
-    <h2>✈️ Add New Trip</h2>
+<div class="form-container">
+    <h2>Add New Destination</h2>
 
     <?php if (!empty($message)): ?>
-        <div class="message <?php echo strpos($message, '✅') !== false ? 'success' : 'error'; ?>">
-            <?php echo $message; ?>
+        <div class="message <?= strpos($message, '✅') !== false ? 'success' : 'error' ?>">
+            <?= $message ?>
         </div>
     <?php endif; ?>
 
-    <form method="POST">
-        <label>Client Name</label>
-        <input type="text" name="client_name" required>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Destination Name</label>
+        <input type="text" name="name" required>
 
-        <label>Select Destination</label>
-        <select name="destination_id" required>
-            <?php
-            if ($result_destination->num_rows > 0) {
-                while($row = $result_destination->fetch_assoc()) {
-                    echo "<option value='{$row['id']}'>{$row['name']}</option>";
-                }
-            } else {
-                echo "<option>No destinations available</option>";
-            }
-            ?>
-        </select>
+        <label>Description</label>
+        <textarea name="description" required></textarea>
 
-        <label>Trip Date</label>
-        <input type="date" name="trip_date" required>
+        <label>Destination Image</label>
+        <input type="file" name="image" accept="image/*" required>
 
-        <button type="submit">Add Trip</button>
+        <button type="submit" name="add_destination">Add Destination</button>
     </form>
 </div>
 
